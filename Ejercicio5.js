@@ -1,84 +1,58 @@
-// Ejercicio 5 - Retiro de cuenta de ahorros
+// Ejercicio 5 - Cooperativa
 
-const readline = require("readline");
+let nombre = "Vanessa";
+let saldo = 500000;
+let retiro = 200000;
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+function procesarRetiro(nombre, saldo, retiro) {
 
-// Función que procesa el retiro y retorna un objeto
-function procesarRetiro(nombre, saldo, montoRetiro) {
+    if (retiro <= 0) {
 
-    // Validar que el monto sea mayor que cero
-    if (montoRetiro <= 0) {
         return {
-            exito: false,
             mensaje: "El monto debe ser mayor a cero"
         };
+
     }
 
-    // Verificar si el saldo es suficiente para realizar el retiro
-    if (saldo >= montoRetiro) {
+    if (saldo >= retiro) {
+
         return {
-            exito: true,
             nombre: nombre,
             saldoAnterior: saldo,
-            montoRetirado: montoRetiro,
-            nuevoSaldo: saldo - montoRetiro
+            montoRetiro: retiro,
+            nuevoSaldo: saldo - retiro,
+            aprobado: true
         };
+
+    } else {
+
+        return {
+            nombre: nombre,
+            falta: retiro - saldo,
+            aprobado: false
+        };
+
     }
 
-    // Retornar información cuando el saldo es insuficiente
-    return {
-        exito: false,
-        nombre: nombre,
-        faltante: montoRetiro - saldo
-    };
 }
 
-// Solicitar el nombre del asociado
-rl.question("Nombre del asociado: ", (nombre) => {
+let resultado = procesarRetiro(nombre, saldo, retiro);
 
-    // Solicitar el saldo disponible
-    rl.question("Saldo disponible: ", (saldo) => {
+if (resultado.mensaje) {
 
-        // Solicitar el monto que desea retirar
-        rl.question("Monto a retirar: ", (montoRetiro) => {
+    console.log(resultado.mensaje);
 
-            // Procesar la operación de retiro
-            const resultado = procesarRetiro(
-                nombre,
-                parseFloat(saldo),
-                parseFloat(montoRetiro)
-            );
+} else if (resultado.aprobado) {
 
-            console.log("\n===== RESULTADO =====");
+    console.log("Nombre: " + resultado.nombre);
+    console.log("Saldo anterior: $" + resultado.saldoAnterior.toLocaleString("es-CO"));
+    console.log("Monto retirado: $" + resultado.montoRetiro.toLocaleString("es-CO"));
+    console.log("Nuevo saldo: $" + resultado.nuevoSaldo.toLocaleString("es-CO"));
 
-            // Mostrar información cuando el retiro es exitoso
-            if (resultado.exito) {
+} else {
 
-                console.log(`Asociado: ${resultado.nombre}`);
-                console.log(`Saldo anterior: $${resultado.saldoAnterior.toLocaleString("es-CO")}`);
-                console.log(`Monto retirado: $${resultado.montoRetirado.toLocaleString("es-CO")}`);
-                console.log(`Nuevo saldo: $${resultado.nuevoSaldo.toLocaleString("es-CO")}`);
+    console.log("Nombre: " + resultado.nombre);
+    console.log("Saldo insuficiente.");
+    console.log("Le faltan $" + resultado.falta.toLocaleString("es-CO") + " para realizar el retiro.");
 
-            } else {
-
-                if (resultado.mensaje) {
-
-                    console.log(resultado.mensaje);
-
-                } else {
-
-                    // Mostrar mensaje cuando el saldo es insuficiente
-                    console.log(`Asociado: ${resultado.nombre}`);
-                    console.log(`Saldo insuficiente.`);
-                    console.log(`Le faltan $${resultado.faltante.toLocaleString("es-CO")} para realizar el retiro.`);
-                }
-            }
-
-            rl.close();
-        });
-    });
-});
+}

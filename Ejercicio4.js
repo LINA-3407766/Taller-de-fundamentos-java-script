@@ -1,71 +1,83 @@
 // Ejercicio 4 - Reporte semanal de ventas
 
-// Arreglo con las ventas registradas durante la semana
 const ventas = [
-    { dia: "Lunes", vendedor: "Ana", unidades: 8, totalVendido: 250000 },
-    { dia: "Martes", vendedor: "Carlos", unidades: 15, totalVendido: 420000 },
-    { dia: "Miércoles", vendedor: "Luisa", unidades: 12, totalVendido: 380000 },
-    { dia: "Jueves", vendedor: "Pedro", unidades: 7, totalVendido: 210000 },
-    { dia: "Viernes", vendedor: "María", unidades: 18, totalVendido: 550000 }
+    { dia: "Lunes", vendedor: "Juan", unidades: 8, totalVendido: 250000 },
+    { dia: "Martes", vendedor: "Yoselin", unidades: 12, totalVendido: 420000 },
+    { dia: "Miércoles", vendedor: "Pedro", unidades: 15, totalVendido: 510000 },
+    { dia: "Jueves", vendedor: "Rossana", unidades: 9, totalVendido: 300000 },
+    { dia: "Viernes", vendedor: "Maikol", unidades: 18, totalVendido: 650000 }
 ];
 
 // Función para calcular el total vendido en la semana
-function calcularTotalSemana(datos) {
-    return datos.reduce((acumulado, venta) => {
-        return acumulado + venta.totalVendido;
+function calcularTotalSemana() {
+
+    let total = ventas.reduce(function(acumulador, venta) {
+        return acumulador + venta.totalVendido;
     }, 0);
+
+    return total;
 }
 
 // Función para encontrar el día con mayor venta
-function encontrarMejorDia(datos) {
-    return datos.reduce((mejor, venta) => {
-        return venta.totalVendido > mejor.totalVendido ? venta : mejor;
+function encontrarMayorVenta() {
+
+    let mayor = ventas.reduce(function(acumulador, venta) {
+
+        if (venta.totalVendido > acumulador.totalVendido) {
+            return venta;
+        } else {
+            return acumulador;
+        }
+
     });
+
+    return mayor;
 }
 
-// Función para filtrar días con más de 10 unidades vendidas
-function filtrarDiasDestacados(datos) {
-    return datos.filter(venta => venta.unidades > 10);
+// Función para filtrar los días con más de 10 unidades
+function diasDestacados() {
+
+    let destacados = ventas.filter(function(venta) {
+        return venta.unidades > 10;
+    });
+
+    return destacados;
 }
 
-// Función para imprimir el reporte completo
+// Función para mostrar el reporte completo
 function imprimirReporte() {
 
-    // Obtener los datos necesarios para el reporte
-    const totalSemana = calcularTotalSemana(ventas);
-    const mejorDia = encontrarMejorDia(ventas);
-    const diasDestacados = filtrarDiasDestacados(ventas);
+    console.log("REPORTE SEMANAL");
 
-    console.log("===== REPORTE SEMANAL DE VENTAS =====\n");
+    console.log("");
 
-    console.log("Ventas registradas:");
+    console.log("Total vendido: $" + calcularTotalSemana().toLocaleString("es-CO"));
 
-    // Recorrer y mostrar las ventas de cada día
-    for (const venta of ventas) {
+    let mayor = encontrarMayorVenta();
+
+    console.log("Día con mayor venta: " + mayor.dia);
+    console.log("Vendedor: " + mayor.vendedor);
+    console.log("Valor vendido: $" + mayor.totalVendido.toLocaleString("es-CO"));
+
+    console.log("---------------------------");
+    console.log("Días con más de 10 unidades:");
+
+    let destacados = diasDestacados();
+
+    for (const venta of destacados) {
+
         console.log(
-            `${venta.dia} | Vendedor: ${venta.vendedor} | Unidades: ${venta.unidades} | Total: $${venta.totalVendido.toLocaleString("es-CO")}`
+            venta.dia +
+            " - " +
+            venta.vendedor +
+            " - " +
+            venta.unidades +
+            " unidades"
         );
+
     }
 
-    console.log("\n===== RESUMEN =====");
-
-    console.log(
-        `Total vendido en la semana: $${totalSemana.toLocaleString("es-CO")}`
-    );
-
-    console.log(
-        `Mejor día: ${mejorDia.dia} con ventas por $${mejorDia.totalVendido.toLocaleString("es-CO")}`
-    );
-
-    console.log("\nDías con más de 10 unidades vendidas:");
-
-    // Mostrar los días destacados por cantidad de unidades vendidas
-    for (const dia of diasDestacados) {
-        console.log(
-            `${dia.dia} - ${dia.unidades} unidades vendidas`
-        );
-    }
 }
 
-// Llamado de la función principal
+// Llamar la función principal
 imprimirReporte();
