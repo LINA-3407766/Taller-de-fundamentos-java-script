@@ -1,6 +1,6 @@
 // Ejercicio 5 - Cooperativa
 
-let nombre = "carolina";
+let nombre = "lina";
 let saldo = 500000;
 let retiro = 200000;
 
