@@ -1,6 +1,6 @@
 // Ejercicio 2 - Gimnasio
 
-let nombre = "Vanessa";
+let nombre = "carolina";
 let edad = 17;
 let plan = 2;
 

@@ -1,6 +1,6 @@
 # Taller JavaScript Fundamentos
 
-**Aprendiz:** Lina gutierrez
+**Aprendiz:** indira salazar
 
 Este repositorio contiene la solución de los 10 ejercicios del taller de JavaScript Fundamentos.
 

@@ -1,6 +1,6 @@
 // Ejercicio 1
 
-let nombre = "Vanessa";
+let nombre = "carolina";
 let peso = 4;
 let ciudad = "Bogotá";
 
